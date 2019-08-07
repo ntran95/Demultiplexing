@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+
+#SBATCH --partition=bgmp        ### Partition (like a queue in PBS)
+#SBATCH --job-name=demult_part1C     ### Job Name
+#SBATCH --output=demult_part1C.out         ### File in which to store job output
+#SBATCH --error=demult_part1C.err          ### File in which to store job error messages
+#SBATCH --time=0-12:00:00       ### Wall clock time limit in Days-HH:MM:SS
+#SBATCH --nodes=1               ### Number of nodes needed for the job
+#SBATCH --ntasks-per-node=1     ### Number of tasks to be launched per Node
+#SBATCH --account=bgmp      ### Account used for job submission
+#SBATCH --cpus-per-task=1
+
+
+#How many indexes have undetermined (N) base calls? (Utilize your command line
+#tool knowledge. Submit the command you used. CHALLENGE: use a one-line
+#command)
+
+zcat 1294_S1_L008_R2_001.fastq.gz | awk 'NR == 2 || NR % 2 == 0' | awk 'NR % 2 == 1'| grep -c "N" > demult_part1C_R2_output.txt
+zcat 1294_S1_L008_R3_001.fastq.gz | awk 'NR == 2 || NR % 2 == 0' | awk 'NR % 2 == 1'| grep -c "N" > demult_part1C_R3_output.txt
